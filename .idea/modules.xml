@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/example-parent.iml" filepath="$PROJECT_DIR$/example-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/example-thrift/example-thrift.iml" filepath="$PROJECT_DIR$/example-thrift/example-thrift.iml" />
+    </modules>
+  </component>
+</project>
