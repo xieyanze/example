@@ -18,10 +18,10 @@ public class Client {
         HelloThrift.Client client = new HelloThrift.Client(tBinaryProtocol);
         try {
             tTransport.open();
-            client.HelloWorld("test",new TestModel(1,"test","test","test","test"));
+            client.HelloWorld("test", new TestModel(1, "test", "test", "test", "test"));
         } catch (TException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             tTransport.close();
         }
     }
