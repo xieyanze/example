@@ -1,4 +1,4 @@
-package com.andy.example.thrift.Server;
+package com.andy.example.thrift.server;
 
 import com.andy.example.thrift.contract.HelloThrift;
 import com.andy.example.thrift.impl.HelloThriftImpl;
@@ -12,12 +12,12 @@ import org.apache.thrift.transport.TServerTransport;
 
 /**
  * Created by 延泽 on 2/26 0026.
- * Pool Server
+ * Pool server
  */
 public class ThreadPoolServer {
     public static void main(String[] args) {
         try {
-            TServerTransport serverTransport = new TServerSocket(9966);
+            TServerTransport serverTransport = new TServerSocket(9977);
             TBinaryProtocol.Factory factory = new TBinaryProtocol.Factory();
             TProcessor processor = new HelloThrift.Processor<>(new HelloThriftImpl());
 
@@ -26,6 +26,7 @@ public class ThreadPoolServer {
             tArgs.protocolFactory(factory);
 
             TServer server = new TThreadPoolServer(tArgs);
+
             System.out.println("server begin...........");
             server.serve();
             System.out.println("-------------------");
