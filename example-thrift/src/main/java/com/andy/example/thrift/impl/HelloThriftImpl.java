@@ -10,8 +10,12 @@ import org.apache.thrift.TException;
  */
 public class HelloThriftImpl implements HelloThrift.Iface {
     public String HelloWorld(String content, TestModel testModel) throws TException {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("content:" + content);
-        System.out.println(testModel);
         return "success";
     }
 }

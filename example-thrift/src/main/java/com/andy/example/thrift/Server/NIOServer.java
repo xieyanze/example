@@ -1,4 +1,4 @@
-package com.andy.example.thrift.Server;
+package com.andy.example.thrift.server;
 
 import com.andy.example.thrift.contract.HelloThrift;
 import com.andy.example.thrift.impl.HelloThriftImpl;
@@ -24,7 +24,6 @@ public class NIOServer {
             TNonblockingServer.Args tArgs = new TNonblockingServer.Args(tNonblockingServerTransport);
             tArgs.processor(processor);
             tArgs.protocolFactory(factory);
-
             TServer server = new TNonblockingServer(tArgs);
             System.out.println("NIO server begin...........");
             server.serve();
