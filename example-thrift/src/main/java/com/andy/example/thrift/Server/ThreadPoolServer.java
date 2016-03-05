@@ -17,15 +17,16 @@ import org.apache.thrift.transport.TServerTransport;
 public class ThreadPoolServer {
     public static void main(String[] args) {
         try {
-            TServerTransport serverTransport = new TServerSocket(9977);
+            TServerTransport serverTransport = new TServerSocket(9966);
             TBinaryProtocol.Factory factory = new TBinaryProtocol.Factory();
-            TProcessor processor = new HelloThrift.Processor<>(new HelloThriftImpl());
+            TProcessor processor = new HelloThrift.Processor<>(new HelloThriftImpl("Simple"));
 
             TThreadPoolServer.Args tArgs = new TThreadPoolServer.Args(serverTransport);
             tArgs.processor(processor);
             tArgs.protocolFactory(factory);
+           // tArgs.maxWorkerThreads(5);
 
-            TServer server = new TThreadPoolServer(tArgs);
+            TThreadPoolServer server = new TThreadPoolServer(tArgs);
 
             System.out.println("server begin...........");
             server.serve();

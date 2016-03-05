@@ -1,22 +1,36 @@
-
-import com.andy.example.thrift.contract.HelloThrift;
-import com.andy.example.thrift.impl.HelloThriftImpl;
-import org.apache.thrift.TException;
-import org.apache.thrift.TProcessor;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.server.TServer;
-import org.apache.thrift.server.TThreadPoolServer;
-import org.apache.thrift.transport.TServerSocket;
-import org.apache.thrift.transport.TServerTransport;
+import com.andy.example.thrift.client.ThriftClient;
 
 /**
  * Created by 延泽 on 2/25 0025..
  * server
  */
 public class App {
+    static Integer total = 0;
 
-    private int id;
     public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                ThriftClient client = new ThriftClient();
+                while (true) {
+                    client.execute("nio");
+                    synchronized (total) {
+                        total++;
+                    }
+                }
+            }).start();
+        }
 
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                    double tps = total / ((System.currentTimeMillis() - start) / 1000);
+                    System.out.println("total:" + total + "tps:" + tps);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

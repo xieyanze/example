@@ -9,13 +9,19 @@ import org.apache.thrift.TException;
  * 服务实现类
  */
 public class HelloThriftImpl implements HelloThrift.Iface {
+
+    private String type;
+
+    public HelloThriftImpl(String type){
+        this.type = type;
+    }
     public String HelloWorld(String content, TestModel testModel) throws TException {
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("content:" + content);
+//        try {
+//            Thread.sleep(50);
+//            System.out.println(type);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return "success";
     }
 }

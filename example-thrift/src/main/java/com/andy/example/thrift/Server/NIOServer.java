@@ -5,8 +5,10 @@ import com.andy.example.thrift.impl.HelloThriftImpl;
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.server.THsHaServer;
 import org.apache.thrift.server.TNonblockingServer;
 import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TThreadedSelectorServer;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TNonblockingServerTransport;
 
@@ -17,14 +19,17 @@ import org.apache.thrift.transport.TNonblockingServerTransport;
 public class NIOServer {
     public static void main(String[] args) {
         try {
-            TNonblockingServerTransport tNonblockingServerTransport = new TNonblockingServerSocket(9966);
+            TNonblockingServerTransport tNonblockingServerTransport = new TNonblockingServerSocket(9977);
             TBinaryProtocol.Factory factory = new TBinaryProtocol.Factory();
-            TProcessor processor = new HelloThrift.Processor<>(new HelloThriftImpl());
+            TProcessor processor = new HelloThrift.Processor<>(new HelloThriftImpl("Nio"));
 
-            TNonblockingServer.Args tArgs = new TNonblockingServer.Args(tNonblockingServerTransport);
+            TThreadedSelectorServer.Args tArgs = new TThreadedSelectorServer.Args(tNonblockingServerTransport);
             tArgs.processor(processor);
             tArgs.protocolFactory(factory);
-            TServer server = new TNonblockingServer(tArgs);
+            //tArgs.maxWorkerThreads(20);
+            tArgs.selectorThreads(160);
+            tArgs.workerThreads(160);
+            TServer server = new TThreadedSelectorServer(tArgs);
             System.out.println("NIO server begin...........");
             server.serve();
             System.out.println("-------------------");
